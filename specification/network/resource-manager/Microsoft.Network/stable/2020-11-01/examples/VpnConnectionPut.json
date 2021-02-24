@@ -20,12 +20,10 @@
               "connectionBandwidth": 200,
               "vpnConnectionProtocolType": "IKEv2",
               "sharedKey": "key",
-              "vpnLinkConnectionMode": "Default",
-              "usePolicyBasedTrafficSelectors": false
+              "vpnLinkConnectionMode": "Default"
             }
           }
-        ],
-        "trafficSelectorPolicies": []
+        ]
       }
     }
   },
@@ -60,6 +58,7 @@
                 "sharedKey": "key",
                 "ingressBytesTransferred": 0,
                 "egressBytesTransferred": 0,
+                "trafficSelectorPolicies": [],
                 "enableBgp": false,
                 "enableRateLimiting": false,
                 "useLocalAzureIpAddress": false,
@@ -127,6 +126,7 @@
                 "sharedKey": "key",
                 "ingressBytesTransferred": 0,
                 "egressBytesTransferred": 0,
+                "trafficSelectorPolicies": [],
                 "enableBgp": false,
                 "enableRateLimiting": false,
                 "useLocalAzureIpAddress": false,

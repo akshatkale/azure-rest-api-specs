@@ -25,6 +25,7 @@
             "sharedKey": "key",
             "ingressBytesTransferred": 0,
             "egressBytesTransferred": 0,
+            "trafficSelectorPolicies": [],
             "enableBgp": false,
             "enableRateLimiting": false,
             "useLocalAzureIpAddress": false,
