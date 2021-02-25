@@ -92,8 +92,7 @@
             "vnetRoutes": {
               "staticRoutes": []
             }
-          },
-          "trafficSelectorPolicies": []
+          }
         }
       }
     },
@@ -160,8 +159,7 @@
             "vnetRoutes": {
               "staticRoutes": []
             }
-          },
-          "trafficSelectorPolicies": []
+          }
         }
       }
     }
