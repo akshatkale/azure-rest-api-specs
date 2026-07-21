@@ -244,6 +244,9 @@ union DataGenerationJobSourceType {
   @doc("Traces source — conversation traces from Application Insights.")
   traces: "traces",
 
+  @doc("Dataset source — reference to a dataset asset.")
+  dataset: "dataset",
+
   @doc("File source — Azure OpenAI file.")
   file: "file",
 }
@@ -274,6 +277,28 @@ model AgentDataGenerationJobSource extends DataGenerationJobSource {
 @extension("x-ms-foundry-meta", DataGenerationJobsRequiredPreviews)
 model TracesDataGenerationJobSource extends DataGenerationJobSource {
   ...TracesJobSource;
+
+  @doc("Optional explicit list of trace IDs to include. Mutually exclusive with `kql_where_clause`.")
+  trace_ids?: string[];
+
+  @doc("Optional KQL where clause used to filter traces.")
+  kql_where_clause?: string;
+
+  @doc("Indicates whether sampling is enabled for trace selection. When false, all eligible traces are used.")
+  sampling_enabled?: boolean = true;
+}
+
+@doc("Dataset source for data generation jobs — reference to an existing dataset asset.")
+@extension("x-ms-foundry-meta", DataGenerationJobsRequiredPreviews)
+model DatasetDataGenerationJobSource extends DataGenerationJobSource {
+  @doc("The source type for this source, which is Dataset.")
+  type: "dataset";
+
+  @doc("The dataset asset name.")
+  name: string;
+
+  @doc("The dataset asset version.")
+  version?: string;
 }
 
 @doc("File source for data generation jobs — Azure OpenAI file input.")
