@@ -60,33 +60,6 @@ namespace Azure.AI.Projects.Beta {
   @@clientLocation(Azure.AI.Projects.MemoryStores.listMemories, MemoryStores);
   @@clientLocation(Azure.AI.Projects.MemoryStores.deleteMemory, MemoryStores);
 
-  interface StateStores {}
-  @@clientLocation(Azure.AI.Projects.StateStores.createStateStore, StateStores);
-  @@clientLocation(Azure.AI.Projects.StateStores.listStateStores, StateStores);
-  @@clientLocation(Azure.AI.Projects.StateStores.getStateStore, StateStores);
-  @@clientLocation(Azure.AI.Projects.StateStores.updateStateStore, StateStores);
-  @@clientLocation(Azure.AI.Projects.StateStores.deleteStateStore, StateStores);
-  @@clientLocation(
-    Azure.AI.Projects.StateStores.createStateStoreItem,
-    StateStores
-  );
-  @@clientLocation(
-    Azure.AI.Projects.StateStores.listStateStoreItemKeys,
-    StateStores
-  );
-  @@clientLocation(
-    Azure.AI.Projects.StateStores.putStateStoreItem,
-    StateStores
-  );
-  @@clientLocation(
-    Azure.AI.Projects.StateStores.getStateStoreItem,
-    StateStores
-  );
-  @@clientLocation(
-    Azure.AI.Projects.StateStores.deleteStateStoreItem,
-    StateStores
-  );
-
   interface Agents {}
   @@clientLocation(Azure.AI.Projects.AgentOptimizationJobs.create, Agents);
   @@clientLocation(Azure.AI.Projects.AgentOptimizationJobs.get, Agents);

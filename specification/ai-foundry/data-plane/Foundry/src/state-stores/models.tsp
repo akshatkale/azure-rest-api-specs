@@ -225,7 +225,7 @@ alias ListStateStoresRequest = {
 };
 
 alias GetStateStoreRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -234,7 +234,7 @@ alias GetStateStoreRequest = {
 };
 
 alias UpdateStateStoreRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -250,7 +250,7 @@ alias UpdateStateStoreRequest = {
 };
 
 alias DeleteStateStoreRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -259,7 +259,7 @@ alias DeleteStateStoreRequest = {
 };
 
 alias CreateItemRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -279,7 +279,7 @@ alias CreateItemRequest = {
 };
 
 alias ListItemKeysRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -295,14 +295,14 @@ alias ListItemKeysRequest = {
 };
 
 alias PutItemRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
   @maxLength(128)
   name: string;
 
-  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -321,14 +321,14 @@ alias PutItemRequest = {
 };
 
 alias GetItemRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
   @maxLength(128)
   name: string;
 
-  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
@@ -337,14 +337,14 @@ alias GetItemRequest = {
 };
 
 alias DeleteItemRequest = {
-  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)
   @maxLength(128)
   name: string;
 
-  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.")
   @path
   @extension("x-ms-foundry-path-encoding", "base64url")
   @minLength(1)

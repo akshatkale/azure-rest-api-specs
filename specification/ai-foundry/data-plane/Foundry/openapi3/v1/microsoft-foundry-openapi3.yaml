@@ -10697,7 +10697,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -10750,7 +10750,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -10819,7 +10819,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -10873,7 +10873,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -10957,7 +10957,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -10966,7 +10966,7 @@ paths:
         - name: key
           in: path
           required: true
-          description: The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.
+          description: The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -11073,7 +11073,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -11082,7 +11082,7 @@ paths:
         - name: key
           in: path
           required: true
-          description: The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.
+          description: The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -11141,7 +11141,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -11150,7 +11150,7 @@ paths:
         - name: key
           in: path
           required: true
-          description: The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.
+          description: The logical item key. SDKs accept the unencoded key and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
@@ -11222,7 +11222,7 @@ paths:
         - name: name
           in: path
           required: true
-          description: The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.
+          description: The logical name of the state store. SDKs accept the unencoded name and apply base64url encoding without padding to the path segment.
           schema:
             type: string
             minLength: 1
