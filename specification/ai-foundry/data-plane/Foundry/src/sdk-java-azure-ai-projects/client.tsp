@@ -14,6 +14,7 @@ import "../evaluators/routes.tsp";
 import "../insights/routes.tsp";
 import "../schedules/routes.tsp";
 import "../routines/routes.tsp";
+import "../state-stores/routes.tsp";
 import "../skills/routes.tsp";
 import "../data_generation_jobs/routes.tsp";
 
@@ -37,6 +38,17 @@ namespace Azure.AI.Projects;
 // --------------------------------------------------------------------------------
 // Renames - operations
 // --------------------------------------------------------------------------------
+
+@@clientName(StateStores.createStateStore, "create");
+@@clientName(StateStores.listStateStores, "list");
+@@clientName(StateStores.getStateStore, "get");
+@@clientName(StateStores.updateStateStore, "update");
+@@clientName(StateStores.deleteStateStore, "delete");
+@@clientName(StateStores.createStateStoreItem, "createItem");
+@@clientName(StateStores.listStateStoreItemKeys, "listKeys");
+@@clientName(StateStores.putStateStoreItem, "putItem");
+@@clientName(StateStores.getStateStoreItem, "getItem");
+@@clientName(StateStores.deleteStateStoreItem, "deleteItem");
 
 // Connections
 @@clientName(Connections.list, "listConnections");

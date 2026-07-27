@@ -1,34 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/**
- * ============================================================================
- * DRAFT — Foundry State Storage contract, adapted to the azure-rest-api-specs
- * Foundry data-plane convention (mirrors `../memory-stores/models.tsp`).
- *
- * This is a STARTING POINT staged for the Azure/azure-rest-api-specs PR. It has
- * NOT been compiled. Before opening the PR you MUST, inside a full specs clone:
- *   1. Register the opt-in key in `../common/servicepatterns.tsp`:
- *        state_stores_v1_preview: "StateStores=V1Preview",
- *      (added to the `FoundryFeaturesOptInKeys` union).
- *   2. `npx tsp compile .` from the Foundry `src` root and fix any diagnostics.
- *   3. Re-generate both SDKs (tsp-client) and reconcile the hand-written
- *      wrappers — generated model SHAPES change vs. the old self-contained
- *      contract (utcDateTime timestamps, Azure.Core paged results, preview
- *      header/opt-in envelope).
- *
- * Open items to verify on compile:
- *   - ETag response header + If-Match optimistic-concurrency (412) semantics
- *     are modelled here as request `@header`s + an alternate error; confirm the
- *     `FoundryDataPlaneRequiredPreviewOperation` template surfaces the response
- *     `ETag` header the way the real service returns it.
- *   - Verb choices (PATCH for update, PUT for putItem) against the template.
- *   - Whether deleted responses should keep the original `object` wire values
- *     ("state_store" / "state_store.item") — preserved here for fidelity with
- *     the real service — or adopt distinct ".deleted" discriminators like
- *     memory-stores does.
- * ============================================================================
- */
 import "../common/service.tsp";
 
 using TypeSpec.Http;
@@ -253,15 +225,21 @@ alias ListStateStoresRequest = {
 };
 
 alias GetStateStoreRequest = {
-  @doc("The name of the state store to retrieve.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 };
 
 alias UpdateStateStoreRequest = {
-  @doc("The name of the state store to update.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
   @doc("Optional free-form description. A present value replaces the stored one.")
   @maxLength(1024)
@@ -272,19 +250,21 @@ alias UpdateStateStoreRequest = {
 };
 
 alias DeleteStateStoreRequest = {
-  @doc("The name of the state store to delete.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 };
 
 alias CreateItemRequest = {
-  @doc("The name of the state store.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
-
-  @doc("Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.")
-  @header("x-ms-user-id")
-  user_id?: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
   @doc("Logical key, unique within the store. May contain `/`.")
   @minLength(1)
@@ -299,37 +279,39 @@ alias CreateItemRequest = {
 };
 
 alias ListItemKeysRequest = {
-  @doc("The name of the state store.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
-  @doc("Optional, repeatable tag-equality filter, e.g. `tags.version=1`. AND-combined; omit to list every key.")
+  @doc("Optional tag-equality filters. SDKs serialize each entry as a `tags.<name>=<value>` query parameter and combine entries with AND semantics.")
   @query
+  @extension("x-ms-foundry-query-prefix", "tags.")
   tags?: Record<string>;
-
-  @doc("Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.")
-  @header("x-ms-user-id")
-  user_id?: string;
 
   ...CommonPageQueryParameters;
 };
 
 alias PutItemRequest = {
-  @doc("The name of the state store.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
-  @doc("The item key.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
   @path
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
   key: string;
 
   @doc("`\"<etag>\"` for a conditional write, or `\"*\"` to require the item already exists. Omit for unconditional last-write-wins.")
   @header("If-Match")
   if_match?: string;
-
-  @doc("Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.")
-  @header("x-ms-user-id")
-  user_id?: string;
 
   @doc("Opaque JSON object; stored and returned verbatim.")
   value: Record<unknown>;
@@ -339,33 +321,69 @@ alias PutItemRequest = {
 };
 
 alias GetItemRequest = {
-  @doc("The name of the state store.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
-  @doc("The item key.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
   @path
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
   key: string;
-
-  @doc("Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.")
-  @header("x-ms-user-id")
-  user_id?: string;
 };
 
 alias DeleteItemRequest = {
-  @doc("The name of the state store.")
+  @doc("The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.")
   @path
-  state_store: string;
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
+  name: string;
 
-  @doc("The item key.")
+  @doc("The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.")
   @path
+  @extension("x-ms-foundry-path-encoding", "base64url")
+  @minLength(1)
+  @maxLength(128)
   key: string;
 
   @doc("`\"<etag>\"` for a conditional delete. Omit for unconditional delete.")
   @header("If-Match")
   if_match?: string;
-
-  @doc("Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.")
-  @header("x-ms-user-id")
-  user_id?: string;
 };
+
+/** Response header returned with successful item reads and writes. */
+alias StateStoreItemEtagResponseHeader = {
+  @doc("The optimistic-concurrency token for the item. This value is identical to the `etag` property in the response body.")
+  @header("ETag")
+  etag_header: string;
+};
+
+/** Response for creating an item. */
+alias CreateStateStoreItemResponse = ResourceCreatedResponse<StateStoreItemRef> &
+  StateStoreItemEtagResponseHeader;
+
+/** Response for replacing an existing item or creating a missing item. */
+alias PutStateStoreItemResponse =
+  | (Response<200> & StateStoreItemRef & StateStoreItemEtagResponseHeader)
+  | (ResourceCreatedResponse<StateStoreItemRef> &
+      StateStoreItemEtagResponseHeader);
+
+/** Response for retrieving an item. */
+alias GetStateStoreItemResponse = Response<200> &
+  StateStoreItem &
+  StateStoreItemEtagResponseHeader;
+
+/** Error envelope for conditional item operations. The ETag header is returned on a 412 response when a current item exists. */
+@error
+model StateStoreConditionalErrorResponse {
+  error: ApiError;
+
+  @doc("The current optimistic-concurrency token when the request fails with 412 Precondition Failed and the item exists.")
+  @header("ETag")
+  etag_header?: string;
+}

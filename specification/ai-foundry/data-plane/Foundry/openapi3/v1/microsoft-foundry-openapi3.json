@@ -9,9 +9,6 @@
       "name": "State Stores"
     },
     {
-      "name": "State Store Items"
-    },
-    {
       "name": "Fine-Tuning"
     },
     {
@@ -16041,8 +16038,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "The request has succeeded.",
+          "201": {
+            "description": "The request has succeeded and a new resource has been created as a result.",
             "content": {
               "application/json": {
                 "schema": {
@@ -16130,7 +16127,7 @@
       "get": {
         "operationId": "listStateStores",
         "summary": "List state stores",
-        "description": "Lists the state stores available to the caller.",
+        "description": "Lists the state stores available to the caller, ordered by `(created_at, id)`.",
         "parameters": [
           {
             "name": "Foundry-Features",
@@ -16265,7 +16262,7 @@
         }
       }
     },
-    "/storage/state_stores/{state_store}": {
+    "/storage/state_stores/{name}": {
       "get": {
         "operationId": "getStateStore",
         "summary": "Get a state store",
@@ -16284,13 +16281,16 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store to retrieve.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "api-version",
@@ -16362,13 +16362,16 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store to update.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "api-version",
@@ -16464,13 +16467,16 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store to delete.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "api-version",
@@ -16525,7 +16531,7 @@
         }
       }
     },
-    "/storage/state_stores/{state_store}/items": {
+    "/storage/state_stores/{name}/items": {
       "post": {
         "operationId": "createStateStoreItem",
         "summary": "Create a state-store item",
@@ -16544,22 +16550,16 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-ms-user-id",
-            "in": "header",
-            "required": false,
-            "description": "Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.",
-            "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "api-version",
@@ -16573,8 +16573,17 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "The request has succeeded.",
+          "201": {
+            "description": "The request has succeeded and a new resource has been created as a result.",
+            "headers": {
+              "ETag": {
+                "required": true,
+                "description": "The optimistic-concurrency token for the item. This value is identical to the `etag` property in the response body.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -16605,7 +16614,7 @@
           }
         },
         "tags": [
-          "State Store Items"
+          "State Stores"
         ],
         "requestBody": {
           "required": true,
@@ -16648,7 +16657,7 @@
         }
       }
     },
-    "/storage/state_stores/{state_store}/items/{key}": {
+    "/storage/state_stores/{name}/items/{key}": {
       "put": {
         "operationId": "putStateStoreItem",
         "summary": "Put a state-store item",
@@ -16667,37 +16676,34 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "key",
             "in": "path",
             "required": true,
-            "description": "The item key.",
+            "description": "The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "If-Match",
             "in": "header",
             "required": false,
             "description": "`\"<etag>\"` for a conditional write, or `\"*\"` to require the item already exists. Omit for unconditional last-write-wins.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-ms-user-id",
-            "in": "header",
-            "required": false,
-            "description": "Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.",
             "schema": {
               "type": "string"
             }
@@ -16716,6 +16722,34 @@
         "responses": {
           "200": {
             "description": "The request has succeeded.",
+            "headers": {
+              "ETag": {
+                "required": true,
+                "description": "The optimistic-concurrency token for the item. This value is identical to the `etag` property in the response body.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StateStoreItemRef"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "The request has succeeded and a new resource has been created as a result.",
+            "headers": {
+              "ETag": {
+                "required": true,
+                "description": "The optimistic-concurrency token for the item. This value is identical to the `etag` property in the response body.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -16726,27 +16760,45 @@
           },
           "4XX": {
             "description": "Client error",
+            "headers": {
+              "ETag": {
+                "required": false,
+                "description": "The current optimistic-concurrency token when the request fails with 412 Precondition Failed and the item exists.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/StateStoreConditionalErrorResponse"
                 }
               }
             }
           },
           "5XX": {
             "description": "Server error",
+            "headers": {
+              "ETag": {
+                "required": false,
+                "description": "The current optimistic-concurrency token when the request fails with 412 Precondition Failed and the item exists.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/StateStoreConditionalErrorResponse"
                 }
               }
             }
           }
         },
         "tags": [
-          "State Store Items"
+          "State Stores"
         ],
         "requestBody": {
           "required": true,
@@ -16799,31 +16851,28 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "key",
             "in": "path",
             "required": true,
-            "description": "The item key.",
+            "description": "The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-ms-user-id",
-            "in": "header",
-            "required": false,
-            "description": "Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.",
-            "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "api-version",
@@ -16839,6 +16888,15 @@
         "responses": {
           "200": {
             "description": "The request has succeeded.",
+            "headers": {
+              "ETag": {
+                "required": true,
+                "description": "The optimistic-concurrency token for the item. This value is identical to the `etag` property in the response body.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -16869,7 +16927,7 @@
           }
         },
         "tags": [
-          "State Store Items"
+          "State Stores"
         ],
         "x-ms-foundry-meta": {
           "required_previews": [
@@ -16895,37 +16953,34 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "key",
             "in": "path",
             "required": true,
-            "description": "The item key.",
+            "description": "The logical item key. SDKs accept the unencoded key and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "If-Match",
             "in": "header",
             "required": false,
             "description": "`\"<etag>\"` for a conditional delete. Omit for unconditional delete.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-ms-user-id",
-            "in": "header",
-            "required": false,
-            "description": "Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.",
             "schema": {
               "type": "string"
             }
@@ -16954,27 +17009,45 @@
           },
           "4XX": {
             "description": "Client error",
+            "headers": {
+              "ETag": {
+                "required": false,
+                "description": "The current optimistic-concurrency token when the request fails with 412 Precondition Failed and the item exists.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/StateStoreConditionalErrorResponse"
                 }
               }
             }
           },
           "5XX": {
             "description": "Server error",
+            "headers": {
+              "ETag": {
+                "required": false,
+                "description": "The current optimistic-concurrency token when the request fails with 412 Precondition Failed and the item exists.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiErrorResponse"
+                  "$ref": "#/components/schemas/StateStoreConditionalErrorResponse"
                 }
               }
             }
           }
         },
         "tags": [
-          "State Store Items"
+          "State Stores"
         ],
         "x-ms-foundry-meta": {
           "required_previews": [
@@ -16983,11 +17056,11 @@
         }
       }
     },
-    "/storage/state_stores/{state_store}/items:keys": {
+    "/storage/state_stores/{name}/items:keys": {
       "get": {
         "operationId": "listStateStoreItemKeys",
         "summary": "List state-store item keys",
-        "description": "Lists item keys (keys-only projection); never returns `value`.",
+        "description": "Lists item keys (keys-only projection), ordered by `(created_at, id)`; never returns `value`.",
         "parameters": [
           {
             "name": "Foundry-Features",
@@ -17002,35 +17075,30 @@
             }
           },
           {
-            "name": "state_store",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The name of the state store.",
+            "description": "The logical name of the state store. SDKs accept the unencoded name and apply unpadded base64url encoding to the path segment.",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "x-ms-foundry-path-encoding": "base64url"
           },
           {
             "name": "tags",
             "in": "query",
             "required": false,
-            "description": "Optional, repeatable tag-equality filter, e.g. `tags.version=1`. AND-combined; omit to list every key.",
+            "description": "Optional tag-equality filters. SDKs serialize each entry as a `tags.<name>=<value>` query parameter and combine entries with AND semantics.",
             "schema": {
               "type": "object",
               "unevaluatedProperties": {
                 "type": "string"
               }
             },
+            "x-ms-foundry-query-prefix": "tags.",
             "explode": false
-          },
-          {
-            "name": "x-ms-user-id",
-            "in": "header",
-            "required": false,
-            "description": "Trusted-only delegation header supplying the resolved end-user id for a user-isolated store.",
-            "schema": {
-              "type": "string"
-            }
           },
           {
             "name": "limit",
@@ -17144,7 +17212,7 @@
           }
         },
         "tags": [
-          "State Store Items"
+          "State Stores"
         ],
         "x-ms-foundry-meta": {
           "required_previews": [
@@ -53539,6 +53607,18 @@
             "StateStores=V1Preview"
           ]
         }
+      },
+      "StateStoreConditionalErrorResponse": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/OpenAI.Error"
+          }
+        },
+        "description": "Error envelope for conditional item operations. The ETag header is returned on a 412 response when a current item exists."
       },
       "StateStoreItem": {
         "type": "object",
